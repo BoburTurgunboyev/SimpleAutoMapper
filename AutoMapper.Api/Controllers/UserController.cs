@@ -27,17 +27,12 @@ namespace AutoMapper.Api.Controllers
             {
                 return BadRequest("null ekan");
             }
-            //var user = new User()
-            //{
-            //    Email = userDto.Email,
-            //    Password = userDto.Password,
-            //    Name = userDto.Name,    
-            //    PhoneNumber = userDto.PhoneNumber,  
-            //};
+
 
             var user =_mapper.Map<User>(userDto);
-
-            return Ok(user);
+            await _context.users.AddAsync(user);
+            var result = await _context.SaveChangesAsync();
+            return Ok(result);
         }
     }
 }
